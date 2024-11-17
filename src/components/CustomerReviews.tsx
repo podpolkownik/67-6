@@ -15,7 +15,7 @@ const reviews = [
     date: "3 дня назад",
     image: "https://sun9-40.userapi.com/impg/tnv-9s_z7tUqpmeeJOwmLrOnJiBU6c0uWzOA6Q/M-Tutnhm63M.jpg?size=736x736&quality=96&sign=91666027b4a5a99a37a7bbf12b208122&type=album",
     text: "С Vitacaps я смогла вернуться к привычной жизни. Теперь дискомфорт и боль в прошлом.",
-    rating: 5,
+    rating: 4,
   },
   {
     name: "Карлос Ортега",
@@ -36,7 +36,7 @@ const reviews = [
     date: "3 дня назад",
     image: "https://sun9-16.userapi.com/impg/rtcikau-Vf6XMUxhadMB_iHa4ipNaNz9Mw4Aag/hyiIxSEGx9Y.jpg?size=1024x1024&quality=96&sign=a4ecce19a72d198b508c67650648d638&type=album",
     text: "Vitacaps помог справиться с проблемой за считаные недели. Огромное спасибо за это средство!",
-    rating: 5,
+    rating: 4,
   },
   {
     name: "Лусия Фуэнтес",
@@ -53,10 +53,18 @@ const reviews = [
     rating: 5,
   }
 ];
-
 const CustomerReviews: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
+  const [comment, setComment] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setComment('');
+    setTimeout(() => setIsSubmitted(false), 3000);
+  };
 
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white">
@@ -94,6 +102,33 @@ const CustomerReviews: React.FC = () => {
             </button>
           </motion.div>
         )}
+
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">
+            Оставить отзыв
+          </h3>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <textarea
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Напишите ваш комментарий здесь..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              className="w-full inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+            >
+              Отправить
+            </button>
+          </form>
+
+          {isSubmitted && (
+            <div className="mt-4 p-4 text-green-700 bg-green-100 border border-green-400 rounded-md">
+              Комментарий отправлен на модерацию
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
