@@ -73,7 +73,7 @@ const CustomerReviews: React.FC = () => {
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white relative">
       {isSubmitted && (
-        <div className="absolute top-4 right-4 p-4 bg-lime-500 text-white font-semibold rounded-md shadow-lg z-50">
+        <div className="fixed top-4 right-4 p-4 bg-lime-500 text-white font-semibold rounded-md shadow-lg z-50">
           Комментарий отправлен на модерацию
         </div>
       )}
@@ -149,3 +149,4 @@ const CustomerReviews: React.FC = () => {
 };
 
 export default CustomerReviews;
+
