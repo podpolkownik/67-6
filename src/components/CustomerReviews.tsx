@@ -53,9 +53,12 @@ const reviews = [
     rating: 5,
   }
 ];
+
+
 const CustomerReviews: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
   const [comment, setComment] = useState('');
+  const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
 
@@ -63,11 +66,18 @@ const CustomerReviews: React.FC = () => {
     e.preventDefault();
     setIsSubmitted(true);
     setComment('');
+    setEmail('');
     setTimeout(() => setIsSubmitted(false), 3000);
   };
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white">
+    <section className="bg-gradient-to-b from-gray-50 to-white relative">
+      {isSubmitted && (
+        <div className="absolute top-4 right-4 p-4 bg-lime-500 text-white font-semibold rounded-md shadow-lg z-50">
+          Комментарий отправлен на модерацию
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -103,32 +113,36 @@ const CustomerReviews: React.FC = () => {
           </motion.div>
         )}
 
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">
-            Оставить отзыв
-          </h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <textarea
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Напишите ваш комментарий здесь..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className="w-full inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
-            >
-              Отправить
-            </button>
-          </form>
-
-          {isSubmitted && (
-            <div className="mt-4 p-4 text-green-700 bg-green-100 border border-green-400 rounded-md">
-              Комментарий отправлен на модерацию
-            </div>
-          )}
-        </div>
+        {showAll && (
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              Оставить отзыв
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-4 bg-gray-100 p-6 rounded-md shadow-md">
+              <input
+                type="email"
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ваш email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <textarea
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Напишите ваш комментарий здесь..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+              />
+              <button
+                type="submit"
+                className="w-full inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+              >
+                Отправить
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </section>
   );
